@@ -3,12 +3,12 @@
   apt: name='libdbd-mysql-perl' state=present
 
 - copy:
-    src=mha/mha4mysql-node_0.56-0_all.deb
+    src=mha/mha4mysql-node_0.58-0_all.deb
     dest=/tmp/
     owner=root
     mode=0700
 
 - name: Install mha manager
   apt:
-    deb=/tmp/mha4mysql-node_0.56-0_all.deb
+    deb=/tmp/mha4mysql-node_0.58-0_all.deb
 
