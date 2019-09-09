@@ -3,14 +3,12 @@
     server_groups="{{ groups.keys()  | map('regex_search','damp.*') | select('string') | list }}"
 
 - name: install dependencies for MHA Manager
-  apt: name="{{ item }}" state=present update_cache=yes cache_valid_time=3600
-  with_items:
-    - libdbi-perl
-    - libdbd-mysql-perl
-    - libconfig-tiny-perl
-    - liblog-dispatch-perl
-    - libparallel-forkmanager-perl
-      
+  apt:
+    name: ['libdbi-perl', 'libdbd-mysql-perl', 'libconfig-tiny-perl', 'liblog-dispatch-perl', 'libparallel-forkmanager-perl']
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: create log directories for MHA 
   file: >
     path=/var/log/mha/{{ item }}
