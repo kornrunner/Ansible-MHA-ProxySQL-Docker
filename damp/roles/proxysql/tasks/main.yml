@@ -1,24 +1,19 @@
 ---
 - set_fact: lsb_release={{ ansible_lsb.codename }}
 
+- name: Add signing key for Percona repo
+  apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: 9334A25F8507EFA5
+
 - name: add Percona repo
   apt_repository: repo="deb http://repo.percona.com/apt {{ lsb_release }} main"
 
-- name: Add signing key for Percona repo
-  apt_key:
-    id: 8507EFA5
-    url: "https://percona.com/downloads/deb-percona-keyring.gpg"
-    keyring: /etc/apt/trusted.gpg.d/debian.gpg
-
 - name: Install ProxySQL package and prerequisites 
   apt:
-    name={{ item }}
-    update_cache=yes
-  with_items:
-      -   mysql-client 
-      -   python-mysqldb 
-      -   proxysql 
-
+    name: ['mysql-client', 'python-mysqldb', 'proxysql']
+    update-cache: yes
+    state: present
 
 #https://github.com/sysown/proxysql/blob/master/doc/configuration_system.md
 - name: generate proxysql.conf based on template
@@ -29,10 +24,10 @@
 
 - service: >
     name=proxysql
-    state=running
+    state=started
     enabled=yes
 
-- wait_for: host={{ proxysql.admin.host }} port={{ proxysql.admin.port }}  delay=3 state=started 
+- wait_for: host={{ proxysql.admin.host }} port={{ proxysql.admin.port }}  delay=3 state=started
 
 - name: create 'app' user on the mysql masters
   mysql_user: >
@@ -144,17 +139,17 @@
 
 - name: proxysql | config | add server
   proxysql_backend_servers:
-    login_host:     	  "{{ proxysql.admin.host }}"
-    login_port:     	  "{{ proxysql.admin.port }}"
-    login_user:     	  "{{ proxysql.admin.user }}"
-    login_password: 	  "{{ proxysql.admin.passwd }}"
-    hostname:       	  "{{ hostvars[item]['inventory_hostname']  }}"
-    hostgroup_id:   	  "{{ hostvars[item]['hostgroup'] }}"     
-    max_replication_lag:  "{{ proxysql.misc.max_replication_lag }}"     
-    comment:        	  "{{ hostvars[item]['cluster'] }}"     
-    port:           	  "3306"
-    load_to_runtime: 	  False 
-    state:           	  present
+    login_host:           "{{ proxysql.admin.host }}"
+    login_port:           "{{ proxysql.admin.port }}"
+    login_user:           "{{ proxysql.admin.user }}"
+    login_password:       "{{ proxysql.admin.passwd }}"
+    hostname:             "{{ hostvars[item]['inventory_hostname']  }}"
+    hostgroup_id:         "{{ hostvars[item]['hostgroup'] }}"
+    max_replication_lag:  "{{ proxysql.misc.max_replication_lag }}"
+    comment:              "{{ hostvars[item]['cluster'] }}"
+    port:                 "3306"
+    load_to_runtime:      False
+    state:                present
   with_inventory_hostnames: all:!proxysql
   register: servers
 
@@ -172,11 +167,11 @@
 
 - name: Enable ProxySQL monitor  
   shell: >
-      mysql 
+      mysql
       --user={{ proxysql.admin.user }}
       --password={{ proxysql.admin.passwd }}
-      --host={{ proxysql.admin.host }}  
-      --port={{ proxysql.admin.port }}  
+      --host={{ proxysql.admin.host }}
+      --port={{ proxysql.admin.port }}
       --execute "
       set mysql-monitor.enabled='true'; LOAD MYSQL VARIABLES TO RUNTIME;"
 
