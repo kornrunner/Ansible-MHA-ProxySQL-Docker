@@ -169,7 +169,7 @@ port: 6033
 App user (default hostgroup is the hostgroup in the inventory file for a given cluster, the traffic will go there unless told otherwise):
 
 
-###Example test scenario #1:
+### Example test scenario #1:
 let's generate some traffic on the first cluster:
 execute these one after another
 ```
@@ -237,9 +237,7 @@ Check the query digest too:
 +----+----------+------------+----------------------------------------------------------------------------------+
 ```
 
-
-
-###Example test scenario #2:
+### Example test scenario #2:
 testing online failover while reading from a cluster (all servers are up and running we only change the replication topology)
 login to the container in 2 terminals:
 ```
@@ -324,15 +322,17 @@ ProxySQL detected the changes and reassigned the servers to the proper replicati
 
 ----
 
-####Edit the global configuration file if you want to change defaults, credentials, roles
-damp/group_vars/all
-the mysql sections shouldn't be modified 
+#### Edit the global configuration file if you want to change defaults, credentials, roles
+`damp/group_vars/all`
+the mysql sections shouldn't be modified
+
+```
 roles_enabled:
     proxysql: true
     mha: true
     sysbench: true
     orchestrator:  true
-```
+
 proxysql:
   admin:
     host: 127.0.0.1
@@ -367,7 +367,7 @@ mysql:
     repl_passwd: slavepass
 ```
 
-####Connect  manually:
+#### Connect  manually:
 ProxySQL admin interface (with any MySQL compatible client)
 ```
 host: 127.0.0.1
@@ -427,4 +427,3 @@ Thanks
 - Derek Downey 
 - Frédéric 'lefred' Descamps 
 - Shlomi Noach
-
