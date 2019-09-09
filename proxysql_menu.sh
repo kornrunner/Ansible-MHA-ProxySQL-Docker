@@ -136,17 +136,17 @@ do
             break
             ;;
         "[test][mukka] sysbench prepare")
-            cmd="sysbench --report-interval=5 --num-threads=4 --num-requests=0 --max-time=20 --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port prepare"
+            cmd="sysbench --report-interval=5 --num-threads=4 --num-requests=0 --max-time=20 --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port prepare"
             exec_cmd "$cmd"
             break
             ;;
         "[test][mukka] sysbench run - 15 sec, ro")
-            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=15  run"
+            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=15  run"
             exec_cmd "$cmd"
             break
             ;;
         "[test][mukka] sysbench run - 60 sec, ro")
-            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=60  run"
+            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app1 --mysql-password=app1 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=60  run"
             exec_cmd "$cmd"
             break
             ;;
@@ -173,17 +173,17 @@ do
             break
             ;;
         "[test][rol] sysbench prepare")
-            cmd="sysbench --report-interval=5 --num-threads=4 --num-requests=0 --max-time=20 --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port prepare"
+            cmd="sysbench --report-interval=5 --num-threads=4 --num-requests=0 --max-time=20 --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port prepare"
             exec_cmd "$cmd"
             break
             ;;
         "[test][rol] sysbench run - 15 sec, ro")
-            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=15  run"
+            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=15  run"
             exec_cmd "$cmd"
             break
             ;;
         "[test][rol] sysbench run - 60 sec, ro")
-            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=60  run"
+            cmd="sysbench --report-interval=1 --num-threads=4 --num-requests=0  --test=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --mysql-user=app3 --mysql-password=app3 --oltp-table-size=10000 --mysql-host=$host --mysql-port=$app_port --oltp-read-only=on --mysql-ignore-errors=all  --max-time=60  run"
             exec_cmd "$cmd"
             break
             ;;
