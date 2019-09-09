@@ -1,7 +1,7 @@
 {
   "Debug": true,
   "EnableSyslog": false,
-  "ListenAddress": ":3000",
+  "ListenAddress": ":{{ orchestrator.port }}",
   "MySQLTopologyUser": "{{ mysql.login_user }}",
   "MySQLTopologyPassword": "{{ mysql.login_passwd }}",
   "MySQLTopologyCredentialsConfigFile": "",
@@ -14,7 +14,7 @@
   "MySQLOrchestratorPort": 3306,
   "MySQLOrchestratorDatabase": "orchestrator",
   "MySQLOrchestratorUser": "root",
-  "MySQLOrchestratorPassword": "",
+  "MySQLOrchestratorPassword": "{{ orchestrator.mysql.passwd }}",
   "MySQLOrchestratorCredentialsConfigFile": "",
   "MySQLOrchestratorSSLPrivateKeyFile": "",
   "MySQLOrchestratorSSLCertFile": "",

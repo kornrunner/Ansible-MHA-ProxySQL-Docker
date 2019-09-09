@@ -22,6 +22,31 @@
     state=started
     enabled=yes
 
+- name: Ensure mysql root password is updated for all root accounts
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    password: "{{ orchestrator.mysql.passwd }}"
+    priv: '*.*:ALL,GRANT'
+    check_implicit_admin: true
+  loop: "{{ orchestrator.mysql.hosts }}"
+  become: yes
+
+- name: Restart MySQL
+  service:
+    name=mysql
+    state=restarted
+    enabled=yes
+
+- name: Create `/root/.my.cnf` with root password credentials
+  template:
+    src:  my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: 0600
+  become: yes
+
 - name: Install Orchestrator 2.1.4
   apt: >
     deb=https://github.com/github/orchestrator/releases/download/v2.1.4/orchestrator_2.1.4_amd64.deb
@@ -34,10 +59,10 @@
 
 - name: Generate Orchestrator config
   template:
-    src=orchestrator-sample.conf.json.j2
-    dest=/usr/local/orchestrator/conf/orchestrator.conf.json
-    owner=root
-    mode=0700
+    src: orchestrator-sample.conf.json.j2
+    dest: /usr/local/orchestrator/orchestrator.conf.json
+    owner: root
+    mode: 0600
 
 - name: Create a new database orchestrator
   mysql_db:
@@ -50,8 +75,8 @@
     state=started
     enabled=yes
 
-# - wait_for: host={{ proxysql.admin.host }} port={{ proxysql.admin.port }}  delay=3 state=started
+- wait_for: host=127.0.0.1 port={{ orchestrator.port }} delay=3 state=started
 
 - name: Add servers to orchestrator
-  shell: orchestrator -c discover -i {{ hostvars[item]['inventory_hostname'] }}:3306  cli
+  shell: orchestrator --config /usr/local/orchestrator/orchestrator.conf.json -c discover -i {{ hostvars[item]['inventory_hostname'] }}:3306 cli
   with_inventory_hostnames: all:!proxysql
