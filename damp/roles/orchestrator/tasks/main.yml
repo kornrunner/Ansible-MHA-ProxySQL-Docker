@@ -47,9 +47,9 @@
     mode: 0600
   become: yes
 
-- name: Install Orchestrator 2.1.4
+- name: Install Orchestrator 3.1.2
   apt: >
-    deb=https://github.com/github/orchestrator/releases/download/v2.1.4/orchestrator_2.1.4_amd64.deb
+    deb=https://github.com/github/orchestrator/releases/download/v3.1.2/orchestrator-sysv-3.1.2_amd64.deb
 
 - name: crate symlink to the binary
   file:
