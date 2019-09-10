@@ -1,7 +1,7 @@
 ---
 - set_fact: lsb_release={{ ansible_lsb.codename }}
 
-- name: Install ProxySQL package and prerequisites
+- name: Install prerequisites
   apt:
     name: ['mysql-client', 'python-mysqldb']
     update-cache: yes
